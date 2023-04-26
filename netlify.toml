@@ -1,6 +1,3 @@
- [build]
-  publish = "build"
-  command = "npm run build"
-  
-[build.environment]
-  CYF_TV_NAME = "cyf-HereshT-tv"
+[build]
+  publish = "/"
+
