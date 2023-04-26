@@ -1,67 +1,76 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
 #root {
-  color: red;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 20px;
 }
-body {
-  font-family: "Arial", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f2f2f2;
+
+#search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 3px solid #5dade2;
+  outline: none;
+  background-color: transparent;
+  transition: border-color 0.3s;
+}
+
+#search-input:focus {
+  border-bottom-color: #1a5276;
+}
+
+#search-results {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .episodes-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .episode-card {
+  background-color: #e7f2f5;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 0 0 calc(33.333% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
   position: relative;
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border-radius: 5px;
-  padding: 1rem;
-  overflow: hidden;
-  transition: transform 0.3s ease-in-out;
-}
-
-.episode-card:hover {
-  transform: translateY(-10px);
 }
 
 .episode-card h2 {
-  margin: 0 0 1rem;
-  font-size: 1.25rem;
+  font-size: 18px;
   font-weight: bold;
-  color: #333333;
+  margin-bottom: 10px;
+  color: #020109;
 }
 
 .episode-card img {
   width: 100%;
   height: auto;
-  margin-bottom: 1rem;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .episode-card p {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #666666;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-footer {
-  margin: 2rem 0;
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-footer a {
-  color: #333333;
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
+mark {
+  background-color: #f1c40f;
+  font-weight: bold;
+  color: #333;
 }
