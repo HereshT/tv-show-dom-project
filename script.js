@@ -1,5 +1,21 @@
+function createEpisodeSelect(episodes) {
+  const select = document.createElement("select");
+  select.id = "episode-select";
+  select.innerHTML = '<option value="">Select an episode</option>';
+
+  episodes.forEach((episode) => {
+    const option = document.createElement("option");
+    option.value = episode.id;
+    option.textContent = `S${String(episode.season).padStart(2, "0")}E${String(
+      episode.number
+    ).padStart(2, "0")} - ${episode.name}`;
+    select.appendChild(option);
+  });
+
+  return select;
+}
+
 function setup() {
-  const allEpisodes = getAllEpisodes();
   const searchInput = document.createElement("input");
   searchInput.id = "search-input";
   searchInput.type = "text";
@@ -11,17 +27,53 @@ function setup() {
   rootElem.appendChild(searchInput);
   rootElem.appendChild(searchResults);
 
-  searchInput.addEventListener("input", (event) => {
-    searchEpisodes(event.target.value, allEpisodes);
-  });
+  // fetch("https://api.tvmaze.com/shows/22036/episodes")
+  // fetch("https://api.tvmaze.com/shows/5/episodes")
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((response) => response.json())
+    .then((allEpisodes) => {
+      const episodeSelect = createEpisodeSelect(allEpisodes);
+      rootElem.insertBefore(episodeSelect, searchResults);
 
-  makePageForEpisodes(allEpisodes);
+      searchInput.addEventListener("input", (event) => {
+        searchEpisodes(event.target.value, allEpisodes);
+      });
+
+      episodeSelect.addEventListener("change", (event) => {
+        const selectedEpisodeId = parseInt(event.target.value);
+        if (selectedEpisodeId) {
+          const selectedEpisode = allEpisodes.find(
+            (ep) => ep.id === selectedEpisodeId
+          );
+          makePageForEpisodes([selectedEpisode]);
+        } else {
+          makePageForEpisodes(allEpisodes);
+        }
+      });
+
+      makePageForEpisodes(allEpisodes);
+    })
+    .catch((error) => {
+      console.error("Error fetching episodes:", error);
+    });
 }
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-  displayEpisodes(episodeList, rootElem);
+
+  // Remove the existing episodes container
+  const oldContainer = document.querySelector(".episodes-container");
+  if (oldContainer) {
+    rootElem.removeChild(oldContainer);
+  }
+
+  // Create and display the new episodes container
+  const newContainer = document.createElement("div");
+  newContainer.className = "episodes-container";
+  displayEpisodes(episodeList, newContainer);
+  rootElem.appendChild(newContainer);
 }
+
 function displayEpisodes(episodes, rootElem, searchTerm = "") {
   const container = document.createElement("div");
   container.className = "episodes-container";
