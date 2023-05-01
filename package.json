@@ -1,0 +1,15 @@
+{
+  "name": "tv-show-dom-project",
+  "version": "1.0.0",
+  "description": "A starting point for CYF's TV show DOM project",
+  "main": "episodes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

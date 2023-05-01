@@ -1,14 +1,34 @@
+function createShowSelect(shows) {
+  const select = document.createElement("select");
+  select.id = "show-select";
+  select.innerHTML = '<option value="">Select a show</option>';
+
+  shows.forEach((show, index) => {
+    const option = document.createElement("option");
+    option.value = show.id;
+    option.textContent = show.name;
+    if (index === 0) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  });
+
+  return select;
+}
 function createEpisodeSelect(episodes) {
   const select = document.createElement("select");
   select.id = "episode-select";
-  select.innerHTML = '<option value="">Select an episode</option>';
+  select.innerHTML = '<option value="">All episodes</option>';
 
-  episodes.forEach((episode) => {
+  episodes.forEach((episode, index) => {
     const option = document.createElement("option");
     option.value = episode.id;
     option.textContent = `S${String(episode.season).padStart(2, "0")}E${String(
       episode.number
     ).padStart(2, "0")} - ${episode.name}`;
+    if (index === 0) {
+      option.selected = true;
+    }
     select.appendChild(option);
   });
 
@@ -27,13 +47,42 @@ function setup() {
   rootElem.appendChild(searchInput);
   rootElem.appendChild(searchResults);
 
-  // fetch("https://api.tvmaze.com/shows/22036/episodes")
-  // fetch("https://api.tvmaze.com/shows/5/episodes")
-  fetch("https://api.tvmaze.com/shows/82/episodes")
+  const allShows = getAllShows().sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+  );
+  const showSelect = createShowSelect(allShows);
+  rootElem.insertBefore(showSelect, searchInput);
+
+  showSelect.addEventListener("change", (event) => {
+    const selectedShowId = parseInt(event.target.value);
+    if (selectedShowId) {
+      // Remove the existing episode select element
+      const episodeSelect = document.getElementById("episode-select");
+      if (episodeSelect) {
+        rootElem.removeChild(episodeSelect);
+      }
+
+      fetchAndDisplayEpisodes(selectedShowId, searchInput);
+    }
+  });
+
+  if (allShows.length > 0) {
+    showSelect.value = allShows[0].id;
+    fetchAndDisplayEpisodes(allShows[0].id, searchInput);
+  }
+}
+
+function fetchAndDisplayEpisodes(showId, searchInput) {
+  fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
     .then((response) => response.json())
     .then((allEpisodes) => {
+      const rootElem = document.getElementById("root");
       const episodeSelect = createEpisodeSelect(allEpisodes);
-      rootElem.insertBefore(episodeSelect, searchResults);
+
+      rootElem.insertBefore(
+        episodeSelect,
+        document.getElementById("search-results")
+      );
 
       searchInput.addEventListener("input", (event) => {
         searchEpisodes(event.target.value, allEpisodes);
@@ -61,13 +110,11 @@ function setup() {
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
 
-  // Remove the existing episodes container
   const oldContainer = document.querySelector(".episodes-container");
   if (oldContainer) {
     rootElem.removeChild(oldContainer);
   }
 
-  // Create and display the new episodes container
   const newContainer = document.createElement("div");
   newContainer.className = "episodes-container";
   displayEpisodes(episodeList, newContainer);

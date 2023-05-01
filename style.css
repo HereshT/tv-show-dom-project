@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
+  background-color: #060f2b;
   color: #333;
 }
 
@@ -16,14 +16,15 @@ body {
   font-size: 16px;
   margin-bottom: 20px;
   border: none;
-  border-bottom: 3px solid #5dade2;
+  border-bottom: 3px solid rgb(249, 249, 5);
+  border-left: 44px solid rgb(249, 249, 5);
   outline: none;
-  background-color: transparent;
+  background-color: #e4eff5;
   transition: border-color 0.3s;
 }
 
 #search-input:focus {
-  border-bottom-color: #1a5276;
+  border-bottom-color: #dedee4;
 }
 
 #search-results {
@@ -81,6 +82,6 @@ mark {
   margin: 10px auto;
   padding: 8px;
   font-size: 16px;
-  border: 3px solid #0f704959;
+  border: 6px solid #fed508f6;
   border-radius: 4px;
 }
