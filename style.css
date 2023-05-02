@@ -75,6 +75,7 @@ mark {
   font-weight: bold;
   color: #333;
 }
+
 #episode-select {
   display: block;
   width: 100%;
@@ -84,4 +85,83 @@ mark {
   font-size: 16px;
   border: 6px solid #fed508f6;
   border-radius: 4px;
+}
+
+#shows-listing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.show-card {
+  width: 100%;
+  background-color: #e7f2f5;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex: 0 0 calc(33.333% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  position: relative;
+  cursor: pointer;
+}
+
+.show-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #020109;
+}
+
+.show-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.show-card p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.navigation > * {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.back-button {
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: #f1c40f;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #e8e8e8;
+}
+
+input#search-input,
+select#show-select {
+  flex: 1;
+  max-width: 49%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input#search-input {
+  margin-right: 1rem;
 }
